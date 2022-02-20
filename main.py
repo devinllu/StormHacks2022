@@ -6,11 +6,12 @@ import games
 import requests
 from dotenv import load_dotenv, find_dotenv
 from social import *
+import time
 
 load_dotenv(find_dotenv())
 
 API_TOKEN = os.environ.get('TOKEN')
-TRIVIA_API = os.getenv('TRIVIA_API')
+TRIVIA_API = os.environ.get('TRIVIA_API')
 
 
 bot = commands.Bot(command_prefix="!")
@@ -122,70 +123,36 @@ async def get_categories(ctx):
     #     embed.add_field(name=i+1, value=arr[i])
     await ctx.send(embed=embed)
 
-@bot.event
-async def on_message(message):
-    category = ''
-    if message.author == bot.user:
-        return 
+@bot.command()
+async def trivia(ctx, content):
+    TRIVIA_URL = 'https://api.api-ninjas.com/v1/trivia'
 
-    if message.content == '!trivia music':
-        category = 'music'
+    try:
+        params = None
+        if content and isinstance(content, str):
+            content = content.lower()
 
-    if message.content == '!trivia language':
-        category = 'language'
+            if content in arr:
+                params = {
+                    'category': content.lower()
+                }
+            else:
+                raise Exception(f'Sorry, input argument {content} is not valid')
 
-    if message.content == '!trivia artliterature':
-        category = 'artliterature'
+        response = requests.get(TRIVIA_URL, headers={'X-Api-Key': TRIVIA_API}, params=params)
 
-    if message.content == '!trivia sciencenature':
-        category = 'sciencenature'
-
-    if message.content == '!trivia general':
-        category = 'general'
-
-    if message.content == '!trivia fooddrink':
-        category = 'fooddrink'
-        
-    if message.content == '!trivia peopleplaces':
-        category = 'peopleplaces'
-
-    if message.content == '!trivia geography':
-        category = 'geography'
-
-    if message.content == '!trivia historyholidays':
-        category = 'historyholidays'
-
-    if message.content== '!trivia entertainment':
-        category = 'entertainment'
-
-    if message.content == '!trivia toysgames':
-        category = 'toysgames'
-
-    if message.content == '!trivia mathematics':
-        category = 'mathematics'
-    
-    if message.content == '!trivia religionmythology':
-        category = 'religionmythology'
-
-    if message.content == '!trivia sportsleisure':
-        category = 'sportsleisure'
-
-    if category != '':
-    
-        URL = 'https://api.api-ninjas.com/v1/trivia?category={}'.format(category)
-
-        response = requests.get(URL, headers={'X-Api-Key': TRIVIA_API})
         if response.status_code == requests.codes.ok:
-            # print(response.json()[0]['category'])
             data = response.json()
-            await message.channel.send(f'{data[0]["question"]}' + '?')
+            question = Embed(title='Question', description=f'{data[0]["question"]}')
+            await ctx.send(embed=question)
+            time.sleep(5)
+            answer = Embed(title='Answer', description=f'||{data[0]["answer"]}||')
+            await ctx.send(embed=answer)
         else:
-            print("Error:", response.status_code, response.text)
-
-    else:
-        vals = message.content.split(' ')[0]
-
-        if vals == '!trivia':
-            await message.channel.send(f'Sorry, command {message.content} is not valid!')
+            await ctx.send(f"Error: {response.status_code} {response.text}")
+    
+    except Exception as e:
+        print(e)
+        await ctx.send(f'Sorry, the input commands you provided were incorrect')
 
 bot.run(API_TOKEN)
