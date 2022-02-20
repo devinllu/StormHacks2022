@@ -1,4 +1,5 @@
 from discord.ext import commands
+from discord import Embed, Color
 from dotenv import load_dotenv, find_dotenv
 import os
 import games
@@ -27,12 +28,53 @@ async def get_platforms(ctx):
 
 @bot.command(name='recommend_game')
 async def recc_game(ctx, args1=None, args2=None):
-    if args1 is not None and not isinstance(args1, str):
-        await ctx.send(f'Sorry, {args1} is not a valid command!')
+    try:
+        game = None
+
+        if args1 and args2:
+            args1 = args1.lower()
+            args2 = args2.lower()
+
+            if args1 in categories:
+                if args2 in platforms:
+                    game = games.recommend_game(platform=args2, category=args1)
+
+            elif args1 in platforms:
+                if args2 in categories:
+                    game = games.recommend_game(platform=args1, category=args2)
+
+        
+        elif args1 and args2 is None:
+            args1 = args1.lower()
+
+            if args1 in categories:
+                game = games.recommend_game(category=args1)
+            
+            elif args1 in platforms:
+                game = games.recommend_game(platform=args1)
+        
+        elif args2 and args1 is None:
+            args2 = args2.lower()
+
+            if args2 in categories:
+                game = games.recommend_game(category=args2)
+            
+            elif args2 in platforms:
+                game = games.recommend_game(platform=args2)
+        
+        elif args1 is None and args2 is None:
+            game = games.recommend_game()
     
-    if args2 is not None and not isinstance(args2, str):
-        await ctx.send(f'Apologies, {args2} is not a valid command!')
-    
-    await ctx.send(f'Completed {args1} {args2}')
+        
+        if game:
+            print(f'genre: {game["genre"]} platform: {game["platform"]}')
+            embed = Embed(title=game['title'], url=game['game_url'], description=game['short_description'], color=Color.blue())
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(f'Sorry, there is no game with the specified category and platform!')
+
+    except Exception as e:
+        print(e)
+        await ctx.send(f'Sorry, the input commands you provided were incorrect')
 
 bot.run(API_TOKEN)
