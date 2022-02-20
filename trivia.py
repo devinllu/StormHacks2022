@@ -34,6 +34,7 @@ bot = commands.Bot(command_prefix='!')
 
 @bot.event
 async def on_message(message):
+    category = ''
     if message.author == bot.user:
         return 
 
@@ -43,10 +44,10 @@ async def on_message(message):
     if message.content == 'language':
         category = 'language'
 
-    if message.conten == 'artliterature':
+    if message.content == 'artliterature':
         category = 'artliterature'
 
-    if message.category == 'sciencenature':
+    if message.content == 'sciencenature':
         category = 'sciencenature'
 
     if message.content == 'general':
@@ -58,25 +59,25 @@ async def on_message(message):
     if message.content == 'peopleplaces':
         category = 'peopleplaces'
 
-    if message.category == 'geography':
+    if message.content == 'geography':
         category = 'geography'
 
-    if message.category == 'historyholidays':
+    if message.content == 'historyholidays':
         category = 'historyholidays'
 
-    if message.category == 'entertainment':
+    if message.content== 'entertainment':
         category = 'entertainment'
 
-    if message.category == 'toysgames':
+    if message.content == 'toysgames':
         category = 'toysgames'
 
-    if message.category == 'mathematics':
+    if message.content == 'mathematics':
         category = 'mathematics'
     
-    if message.category == 'religionmythology':
+    if message.content == 'religionmythology':
         category = 'religionmythology'
 
-    if message.category == 'sportsleisure':
+    if message.content == 'sportsleisure':
         category = 'sportsleisure'
     
     URL = 'https://api.api-ninjas.com/v1/trivia?category={}'.format(category)
@@ -85,6 +86,9 @@ async def on_message(message):
     if response.status_code == requests.codes.ok:
         # print(response.json()[0]['category'])
         data = response.json()
-        message.channel.send(f'{data[0]["question"]}')
+        await message.channel.send(f'{data[0]["question"]}' + '?')
     else:
         print("Error:", response.status_code, response.text)
+
+
+bot.run(TOKEN)
