@@ -1,5 +1,7 @@
 from email import message
-from discord.ext import commands
+from xml.dom.minidom import Element
+from discord.ext import commands 
+from discord import Embed, Color
 import discord
 import os
 from dotenv import load_dotenv
@@ -18,9 +20,12 @@ arr = ['artliterature', 'language',
 async def on_ready():
     print (f'{bot.user} succesfully logged in!')
 
-@bot.command(name="category")
+@bot.command(name="trivia_category")
 async def get_categories(ctx):
-    await ctx.send(f'Select category:\n{arr}')
+    embed = Embed(title="Trivia Categories", color=Color.dark_gold())
+    for i in range(len(arr)):
+        embed.add_field(name=i+1, value=arr[i])
+    await ctx.send(embed=embed)
 
 
 bot.run(TOKEN)
