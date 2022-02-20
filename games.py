@@ -41,7 +41,7 @@ def recommend_game(platform=None, category=None):
 
 def main():
     game = recommend_game(category='sci-fi')
-    print(game)
+    print(game.keys())
 
 if __name__ == "__main__":
     main()

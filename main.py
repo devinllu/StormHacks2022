@@ -34,7 +34,7 @@ async def commands(ctx):
     game_commands = '!game_categories\n!game_platforms\n!recommend_game'
     social_commands = '!social\n!go'
     trivia_commands = '!trivia_categories\n!trivia'
-    embed = Embed(title='Commands', color=Color.dark_gold())
+    embed = Embed(title='Commands', color=Color.blue())
     embed.add_field(name='Game Commands', value=game_commands)
     embed.add_field(name='Social Commands', value=social_commands)
     embed.add_field(name='Trivia Commands', value=trivia_commands)
@@ -117,7 +117,7 @@ async def go(ctx):
 @bot.command(name="trivia_categories")
 async def get_categories(ctx):
     stringified = '\n'.join(arr)
-    embed = Embed(title="Trivia Categories", color=Color.dark_gold())
+    embed = Embed(title="Trivia Categories", color=Color.blue())
     embed.add_field(name='Filter By', value=stringified)
     # for i in range(len(arr)):
     #     embed.add_field(name=i+1, value=arr[i])
