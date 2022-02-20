@@ -1,11 +1,16 @@
+from discord.ext import commands 
+from discord import Embed, Color
 import os
 
-from discord import Embed, Color
-
 import games
-from discord.ext import commands
 from dotenv import load_dotenv, find_dotenv
 from social import *
+
+arr = ['artliterature', 'language',
+    'sciencenature', 'general', 'fooddrink', 'peopleplaces',
+    'geography', 'historyholidays', 'entertainment', 
+    'toysgames', 'music', 'mathematics', 
+    'religionmythology', 'sportsleisure']
 
 load_dotenv(find_dotenv())
 
@@ -89,5 +94,11 @@ async def social(ctx): # The name of the function is the name of the command
 async def go(ctx):
     await ctx.send('Here is your question {}'.format(ctx.author.mention) + "\n**" + social_mode() + "**")
 
+@bot.command(name="trivia_category")
+async def get_categories(ctx):
+    embed = Embed(title="Trivia Categories", color=Color.dark_gold())
+    for i in range(len(arr)):
+        embed.add_field(name=i+1, value=arr[i])
+    await ctx.send(embed=embed)
 
 bot.run(API_TOKEN)
