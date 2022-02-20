@@ -36,12 +36,12 @@ def recommend_game(platform=None, category=None):
 
         return data[idx]
 
-    return 'Sorry, there was an error processing the request'
+    return 'Sorry, there seems to be no games with the requested inputs'
 
 
 def main():
-    game = recommend_game(category='shooter', platform='browser')
-    print(game.keys())
+    game = recommend_game(category='sci-fi')
+    print(game)
 
 if __name__ == "__main__":
     main()

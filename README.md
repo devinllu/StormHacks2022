@@ -44,6 +44,7 @@ A discord bot created for StormHacks 2022. For more information about the event,
 
 - Python
 - Discord API
+- [FreeToGameAPI](https://www.freetogame.com/api-doc)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -77,3 +78,6 @@ python --version
   ```
   python main.py
   ```
+
+## Questions
+For any other questions/inquiries, please contact the creators by email.
