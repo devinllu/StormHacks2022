@@ -1,14 +1,15 @@
 import os
+
+from discord import Embed, Color
+
 import games
+from discord.ext import commands
+from dotenv import load_dotenv, find_dotenv
+from social import *
 
 load_dotenv(find_dotenv())
-import sys
 
 API_TOKEN = os.environ.get('TOKEN')
-import discord
-from discord.ext import commands
-from dotenv import load_dotenv
-from social import *
 
 
 bot = commands.Bot(command_prefix="!")
@@ -79,16 +80,14 @@ async def recc_game(ctx, args1=None, args2=None):
         print(e)
         await ctx.send(f'Sorry, the input commands you provided were incorrect')
 
-bot.run(API_TOKEN)
-@client.command()
+@bot.command()
 async def social(ctx): # The name of the function is the name of the command
     await ctx.send(welcome_msg())
 
 
-@client.command()
+@bot.command()
 async def go(ctx):
     await ctx.send('Here is your question {}'.format(ctx.author.mention) + "\n**" + social_mode() + "**")
 
 
-
-client.run(TOKEN)
+bot.run(API_TOKEN)
