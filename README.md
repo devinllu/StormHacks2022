@@ -62,7 +62,7 @@ python --version
 
 ## Installation
 
-1. Get free API key at [API NINJAS](https://api-ninjas.com/) and setup a TOKEN keyword in a .env file with the key.
+1. Get free API key at [API NINJAS](https://api-ninjas.com/), but to get the .env file, email one of the creators.
 2. Clone the repo
    ```
    git clone git@github.com:devinllu/StormHacks2022.git
