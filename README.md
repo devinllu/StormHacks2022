@@ -61,12 +61,19 @@ python --version
 
 ## Installation
 
-1. Get free API key at [API NINJAS](https://api-ninjas.com/)
+1. Get free API key at [API NINJAS](https://api-ninjas.com/) and setup a TOKEN keyword in a .env file with the key.
 2. Clone the repo
    ```
    git clone git@github.com:devinllu/StormHacks2022.git
    ```
 3. Setup the virtual environment
    ```
-   python3 -m pip install --user virtualenv
+   pip install virtualenv
+   virtualenv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
    ```
+4. Run the app
+  ```
+  python main.py
+  ```
