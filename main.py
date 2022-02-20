@@ -21,7 +21,8 @@ async def on_ready():
 async def social(ctx): # The name of the function is the name of the command
     # print(arg) # this is the text that follows the command
     # await ctx.send(int(arg) ** 2) # ctx.send sends text in chat
-    await ctx.send(social_mode(ctx))
+    # channel = discord.utils.get(ctx.guild.channels, name=given_name)
 
+    await ctx.send(social_mode())
 
 client.run(TOKEN)
