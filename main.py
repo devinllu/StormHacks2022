@@ -1,15 +1,20 @@
-import os
-
+from email import message
+from discord.ext import commands
 import discord
-from dotenv import load_dotenv
 
-load_dotenv()
-TOKEN = os.getenv('TOKEN')
+bot = commands.Bot(command_prefix='!')
 
-client = discord.Client()
+arr = ['artliterature', 'language',
+    'sciencenature', 'general', 'fooddrink', 'peopleplaces',
+    'geography', 'historyholidays', 'entertainment', 
+    'toysgames', 'music', 'mathematics', 
+    'religionmythology', 'sportsleisure']
 
-@client.event
+@bot.event
 async def on_ready():
-    print(f'{client.user} has connected to Discord!')
+    print (f'{bot.user} succesfully logged in!')
 
-client.run(TOKEN)
+@bot.commands(name="category")
+async def get_categories(ctx):
+    await ctx.send(f'Select category:\n{arr}')
+
